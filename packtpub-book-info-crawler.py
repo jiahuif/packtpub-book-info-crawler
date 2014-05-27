@@ -2,6 +2,12 @@ import requests
 from pyquery import PyQuery as pq
 import sqlite3
 import sys
+import argparse
+
+parser = argparse.ArgumentParser(description='Crawl the basic information of books listed on PacktPub.')
+parser.add_argument('--start-page', type=int, dest='start', help='the page to start crawling', default=0)
+args = parser.parse_args()
+page = args.start
 
 session = requests.Session()
 
@@ -31,9 +37,10 @@ def save_book_info_to_db(conn, book_info):
     return
   cur.execute("INSERT INTO books VALUES (?, ?, ?, ?, ?)", (book_info['ISBN'] , book_info['ISBN 13'] , book_info['Title'] , book_info['Author(s)'] , book_info['Release Date']) )
   conn.commit()
+
+
 conn = init_database()
 try:
-  page = 24
   while True:
     listing_url = "http://www.packtpub.com/books?page=%d" % page
     print >> sys.stderr, "Listing url:", listing_url
