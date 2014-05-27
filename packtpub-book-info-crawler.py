@@ -33,10 +33,10 @@ def save_book_info_to_db(conn, book_info):
   conn.commit()
 conn = init_database()
 try:
-  page = 0
+  page = 24
   while True:
     listing_url = "http://www.packtpub.com/books?page=%d" % page
-    print >> "Listing url:",sys.stderr, listing_url
+    print >> sys.stderr, "Listing url:", listing_url
     r = session.get(listing_url)
     r.raise_for_status()
     listing_html = r.text
