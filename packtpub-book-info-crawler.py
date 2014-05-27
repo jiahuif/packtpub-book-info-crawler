@@ -35,8 +35,8 @@ conn = init_database()
 try:
   page = 0
   while True:
-    listing_url = "Listing url:","http://www.packtpub.com/books?page=%d" % page
-    print >> sys.stderr, listing_url
+    listing_url = "http://www.packtpub.com/books?page=%d" % page
+    print >> "Listing url:",sys.stderr, listing_url
     r = session.get(listing_url)
     r.raise_for_status()
     listing_html = r.text
